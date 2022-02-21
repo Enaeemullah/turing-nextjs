@@ -8,63 +8,54 @@ import { BaseURL } from '../utils/BaseURL';
 import { CircleLoader } from 'react-spinners';
 import swal from 'sweetalert';
 import { Container } from 'react-bootstrap';
-
-type Note = {
-  id: String;
-  content: String;
-};
-type Call = {
-  id: String;
-  direction: String; // "inbound" or "outbound" call
-  from: String; // Caller's number
-  to: String; // Callee's number
-  duration: number; // Duration of a call (in seconds)
-  is_archived: Boolean; // Boolean that indicates if the call is archived or not
-  call_type: String; // The type of the call, it can be a missed, answered or voicemail.
-  via: String; // Aircall number used for the call.
-  created_at: String; // When the call has been made.
-  notes: Note[]; // Notes related to a given call
-};
+import { Note } from '../types/NoteType';
+import { Call } from '../types/CallType';
+import { FiArrowRight, FiRefreshCcw } from 'react-icons/fi';
 
 export default function CallsData() {
   const [posts, setPosts] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [datatable, setDatatable]: any = useState({});
   const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(10);
-  // const [password, setPassword] = useState(sessionStorage.getItem('password'));
-  // const [email, setEmail] = useState(sessionStorage.getItem('userName'));
+  const [limit, setLimit] = useState(100);
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
   const [hasNextPage, setHasNextPage] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  // const refreshToken = () => {
-  //   const userObject = {
-  //     username: email,
-  //     password: password,
-  //   };
+  const nextPage = () => {
+    setOffset(offset + 5);
+    setLoaded(false);
+  };
 
-  //   axios
-  //     .post(BaseURL + 'auth/refresh-token', userObject, {
-  //       headers: {
-  //         Authorization: 'Bearer ' + token,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       console.log(res.data.access_token);
+  const refreshToken = () => {
+    const userObject = {
+      username: email,
+      password: password,
+    };
 
-  //       localStorage.setItem('token', res.data.access_token);
-  //       if (!isEmpty(res?.data?.access_token)) {
-  //         swal({
-  //           text: 'Token has been updated successfully',
-  //           icon: 'success',
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+    axios
+      .post(BaseURL + 'auth/refresh-token', userObject, {
+        headers: {
+          Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.data.access_token);
+
+        sessionStorage.setItem('token', res.data.access_token);
+        if (!isEmpty(res?.data?.access_token)) {
+          swal({
+            text: 'Token has been updated successfully',
+            icon: 'success',
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     const accessToken = sessionStorage.getItem('token');
@@ -76,10 +67,13 @@ export default function CallsData() {
       })
       .then((res) => {
         setPosts(res.data.nodes);
+        console.log(res.data.nodes);
+
         setTotalCount(res.data.totalCount);
         setHasNextPage(res.data.hasNextPage);
-        console.log(res.data.totalCount);
-        console.log(res.data.hasNextPage);
+        for (const row of res.data.nodes) {
+          row.is_archived = row.is_archived.toString();
+        }
         setDatatable({
           columns: [
             {
@@ -99,12 +93,12 @@ export default function CallsData() {
             {
               label: 'Direction',
               field: 'direction',
-              width: 200,
+              width: 150,
             },
             {
               label: 'Call Type',
               field: 'call_type',
-              width: 100,
+              width: 150,
             },
             {
               label: 'Created date',
@@ -116,6 +110,16 @@ export default function CallsData() {
               field: 'via',
               sort: 'disabled',
               width: 100,
+            },
+            {
+              label: 'Duration',
+              field: 'duration',
+              width: 100,
+            },
+            {
+              label: 'isArchived',
+              field: 'is_archived',
+              width: 150,
             },
           ],
           rows: res.data.nodes,
@@ -151,38 +155,29 @@ export default function CallsData() {
                       setLoaded(false);
                     }}
                   >
-                    <i className='fas fa-arrow-right'></i>
+                    <FiArrowRight />
                   </Button>
                 ) : (
                   <Button
                     type='button'
                     disabled
                     className='btn btn-primary'
-                    onClick={() => {
-                      setOffset(offset + 5);
-                      setLoaded(false);
-                    }}
+                    onClick={nextPage}
                   >
-                    Next 5 calls data
+                    <FiArrowRight color={'#4f46f8'} />
                   </Button>
                 )}
 
-                {/* <Button
-                  type='button'
-                  className=' ms-3'
-                  onClick={() => {
-                    refreshToken();
-                  }}
-                >
-                  Refresh<i className='fas fa-redo-alt'></i>
-                </Button> */}
+                <Button type='button' className=' ms-3' onClick={refreshToken}>
+                  <FiRefreshCcw color='white' />
+                </Button>
               </div>
               <div>
-                {/* <div>
+                <div>
                   <i className='fa fa-user m-3' aria-hidden='true'></i>
                   <b>{email}</b>
-                </div> */}
-                <div className='mt-4 float-end'>
+                </div>
+                <div className='mt-7 float-end'>
                   {offset + 1 + ' to ' + (offset + 5) + ' of '}{' '}
                   <b>{totalCount}</b>
                 </div>
@@ -190,7 +185,7 @@ export default function CallsData() {
             </div>
             <MDBDataTableV5
               hover
-              entriesOptions={[3, 5, 10]}
+              entriesOptions={[5, 20, 25]}
               entries={5}
               pagesAmount={4}
               data={datatable}

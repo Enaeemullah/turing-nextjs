@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { BaseURL } from '../utils/BaseURL';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { FiUsers, FiArrowRight } from 'react-icons/fi';
 
 const SignIn = () => {
   const router = useRouter();
@@ -16,7 +17,6 @@ const SignIn = () => {
 
   const handleValidation = (event?: any) => {
     let formIsValid = true;
-
 
     // if(!email && !password)
     if (!email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
@@ -69,16 +69,17 @@ const SignIn = () => {
     }
   };
 
-  if (redirect) {
-    // return router.push('/callsdata');
-    return <Navigate to='/callsdata' />;
-  }
+  // if (redirect) {
+  //   // return router.push('/callsdata');
+  //   return <Navigate to='/callsdata' />;
+  // }
 
   return (
     <div className='login-parent'>
       <div className='login'>
         <h3>
-          <i className='fas fa-user'></i>
+          <FiUsers />
+          {/* <i className='fas fa-user'></i> */}
         </h3>
         <div className='row'>
           <div className='col-md-4'>
@@ -116,7 +117,7 @@ const SignIn = () => {
               </div>
               <br />
               <Button variant='primary' type='submit'>
-                Sign In
+                Sign In <FiArrowRight />
               </Button>
             </Form>
           </div>
