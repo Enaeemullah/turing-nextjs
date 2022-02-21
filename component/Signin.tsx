@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
 import { BaseURL } from '../utils/BaseURL';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
@@ -18,7 +17,6 @@ const SignIn = () => {
   const handleValidation = (event?: any) => {
     let formIsValid = true;
 
-    // if(!email && !password)
     if (!email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
       formIsValid = false;
       setemailError('Email Not Valid');

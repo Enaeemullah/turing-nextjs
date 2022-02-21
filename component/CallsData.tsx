@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
 import style from './Data.module.css';
 import axios from 'axios';
 import { MDBDataTableV5 } from 'mdbreact';
@@ -10,6 +12,8 @@ import swal from 'sweetalert';
 import { Container } from 'react-bootstrap';
 import { Note } from '../types/NoteType';
 import { Call } from '../types/CallType';
+import { FiUser } from 'react-icons/fi';
+
 import { FiArrowRight, FiRefreshCcw } from 'react-icons/fi';
 
 export default function CallsData() {
@@ -47,7 +51,7 @@ export default function CallsData() {
         sessionStorage.setItem('token', res.data.access_token);
         if (!isEmpty(res?.data?.access_token)) {
           swal({
-            text: 'Token has been updated successfully',
+            text: 'Token has been updated successfully!',
             icon: 'success',
           });
         }
@@ -174,8 +178,9 @@ export default function CallsData() {
               </div>
               <div>
                 <div>
-                  <i className='fa fa-user m-3' aria-hidden='true'></i>
-                  <b>{email}</b>
+                  {/* <i className='fa fa-user m-3' aria-hidden='true'></i> */}
+                  <FiUser />
+                  {/* User */}
                 </div>
                 <div className='mt-7 float-end'>
                   {offset + 1 + ' to ' + (offset + 5) + ' of '}{' '}
