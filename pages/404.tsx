@@ -1,20 +1,38 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Button } from 'react-bootstrap';
 
 function custom404() {
-  const router = useRouter();
-  const homeHandler = (e: any) => {
-    e.preventDefault();
-    router.push('/');
-  };
   return (
     <>
-      This Page is not found.
-      <Button className='btn btn-primary' onClick={homeHandler}>
-        Go Back.
-      </Button>
-      ;
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-12'>
+            <div className='error-template'>
+              <h1>Oops!</h1>
+              <h2>404 Not Found</h2>
+              <div className='error-details'>
+                Sorry, an error has occured, Requested page not found!
+              </div>
+              <div className='error-actions'>
+                <Link href='/' passHref>
+                  <Button className='btn btn-primary btn-lg'>
+                    {' '}
+                    Take Me Home
+                    <span className='glyphicon glyphicon-home'></span>{' '}
+                  </Button>
+                </Link>
+                <Link href='/' passHref>
+                  <Button className='btn btn-default btn-lg'>
+                    <span className='glyphicon glyphicon-envelope'></span>{' '}
+                    Contact Support{' '}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

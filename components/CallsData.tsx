@@ -132,7 +132,7 @@ export default function CallsData() {
         console.log(res.data.nodes);
         console.log(res);
       });
-  }, [offset]);
+  }, [offset, limit]);
 
   return (
     <div className={style.calls}>

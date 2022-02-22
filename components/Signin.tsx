@@ -94,7 +94,7 @@ const SignIn = () => {
                   onChange={(event) => setEmail(event.target.value)}
                 />
                 <Form.Text className='text-muted'>
-                  We'll never share your email with anyone else.
+                  We will never share your email with anyone else.
                 </Form.Text>
                 <small id='emailHelp' className='text-danger form-text'>
                   {emailError}
