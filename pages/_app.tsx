@@ -1,4 +1,4 @@
-import Layout from '../component/Layout';
+import Layout from '../components/Layout';
 import { useEffect } from 'react';
 import '../styles/globals.css';
 import 'bootstrap/dist/css/bootstrap.css';

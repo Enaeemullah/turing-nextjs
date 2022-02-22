@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import style from './Data.module.css';
+import style from '../styles/Data.module.css';
 import axios from 'axios';
 import { MDBDataTableV5 } from 'mdbreact';
 import { isEmpty } from '../utils/Common';

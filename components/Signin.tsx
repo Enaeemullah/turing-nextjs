@@ -114,8 +114,8 @@ const SignIn = () => {
                 </small>
               </div>
               <br />
-              <Button variant='primary' type='submit'>
-                Sign In <FiArrowRight />
+              <Button variant='dark' type='submit'>
+                Sign In
               </Button>
             </Form>
           </div>

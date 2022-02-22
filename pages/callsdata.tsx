@@ -1,5 +1,5 @@
 import React from 'react';
-import CallsData from '../component/CallsData';
+import CallsData from '../components/CallsData';
 
 function calls() {
   return (
