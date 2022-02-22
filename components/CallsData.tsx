@@ -7,7 +7,7 @@ import axios from 'axios';
 import { MDBDataTableV5 } from 'mdbreact';
 import { isEmpty } from '../utils/Common';
 import { BaseURL } from '../utils/BaseURL';
-import { CircleLoader } from 'react-spinners';
+import HashLoader from 'react-spinners/HashLoader';
 import swal from 'sweetalert';
 import { Container } from 'react-bootstrap';
 import { Note } from '../types/NoteType';
@@ -139,7 +139,7 @@ export default function CallsData() {
       <div className='container'>
         {!loaded && (
           <div className='loader'>
-            <CircleLoader color={'#4f46f8'} size={70} />
+            <HashLoader color={'#7A7676'} size={70} />
           </div>
         )}
 
@@ -153,27 +153,33 @@ export default function CallsData() {
                 {hasNextPage ? (
                   <Button
                     type='button'
-                    className='btn btn-primary'
+                    className='btn btn-outline-secondary'
                     onClick={() => {
                       setOffset(offset + 5);
                       setLoaded(false);
                     }}
                   >
-                    <FiArrowRight />
+                    Next Page
+                    {/* <FiArrowRight /> */}
                   </Button>
                 ) : (
                   <Button
                     type='button'
-                    disabled
-                    className='btn btn-primary'
+                    className='btn btn-outline-secondary'
                     onClick={nextPage}
                   >
-                    <FiArrowRight color={'#4f46f8'} />
+                    Next Page
+                    {/* <FiArrowRight color={'#4f8'} /> */}
                   </Button>
                 )}
 
-                <Button type='button' className=' ms-3' onClick={refreshToken}>
-                  <FiRefreshCcw color='white' />
+                <Button
+                  type='button'
+                  className='btn btn-outline-secondary ml-3'
+                  onClick={refreshToken}
+                >
+                  RefreshToken
+                  {/* <FiRefreshCcw className='ml-1' /> */}
                 </Button>
               </div>
               <div>
