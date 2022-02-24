@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
+import Button from '@geist-ui/core/esm/button';
+import Spinner from '@geist-ui/core/esm/spinner';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import style from '../styles/Data.module.css';
@@ -10,8 +12,6 @@ import { BaseURL } from '../utils/BaseURL';
 import HashLoader from 'react-spinners/HashLoader';
 import swal from 'sweetalert';
 import { Container } from 'react-bootstrap';
-import { Note } from '../types/NoteType';
-import { Call } from '../types/CallType';
 import { FiUser } from 'react-icons/fi';
 
 import { FiArrowRight, FiRefreshCcw } from 'react-icons/fi';
@@ -139,7 +139,8 @@ export default function CallsData() {
       <div className='container'>
         {!loaded && (
           <div className='loader'>
-            <HashLoader color={'#7A7676'} size={70} />
+            {/* <HashLoader color={'#7A7676'} size={70} /> */}
+            <Spinner />
           </div>
         )}
 
@@ -152,7 +153,7 @@ export default function CallsData() {
                 </Container>
                 {hasNextPage ? (
                   <Button
-                    type='button'
+                    // type='button'
                     className='btn btn-outline-secondary'
                     onClick={() => {
                       setOffset(offset + 5);
@@ -164,7 +165,7 @@ export default function CallsData() {
                   </Button>
                 ) : (
                   <Button
-                    type='button'
+                    // type='button'
                     className='btn btn-outline-secondary'
                     onClick={nextPage}
                   >
@@ -174,7 +175,7 @@ export default function CallsData() {
                 )}
 
                 <Button
-                  type='button'
+                  // type='button'
                   className='btn btn-outline-secondary ml-3'
                   onClick={refreshToken}
                 >
